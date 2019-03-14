@@ -1,4 +1,15 @@
-- build: examples/usage
-  photon: [0.6.3, 0.7.0, 0.8.0-rc.8]
-  p1: [latest]
-  electron: [0.6.4, 0.7.0]
+- build: examples/i2c_bme280
+  photon: [0.6.3, 0.7.0, 0.8.0-rc.12, 1.0.0]
+  p1: [1.0.0]
+  electron: [0.7.0, 1.0.0]
+  argon: [0.8.0-rc.27, 0.9.0]
+  boron: [0.9.0]
+  xenon: [0.9.0]
+- build: examples/spi_bme280
+  photon: [1.0.0]
+  p1: [1.0.0]
+  electron: [1.0.0]
+  argon: [0.9.0]
+  boron: [0.9.0]
+  xenon: [0.9.0]
+  
