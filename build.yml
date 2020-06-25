@@ -7,7 +7,7 @@
 - build: examples/spi_bme280
   photon: [latest]
   p1: [latest]
-  electron: latest]
+  electron: [latest]
   argon: [latest]
   boron: [latest]
 - build: examples/i2c_Wire1
