@@ -1,3 +1,13 @@
+# Port of Adafruit BME Library
+
+## Version History
+
+### 1.0.9
+
+- Added support for other Wire interface (like Wire1 or Wire3) by passing it to the constructor.
+
+---
+
 This is a library for the Adafruit BME280 Humidity, Barometric Pressure + Temp sensor
 
 Designed specifically to work with the Adafruit BME280 Breakout 

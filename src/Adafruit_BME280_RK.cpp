@@ -26,6 +26,11 @@ Adafruit_BME280::Adafruit_BME280()
     : _cs(-1), _mosi(-1), _miso(-1), _sck(-1)
 { }
 
+Adafruit_BME280::Adafruit_BME280(TwoWire &wire)
+    : _wire(wire), _cs(-1), _mosi(-1), _miso(-1), _sck(-1)
+{ }
+
+
 Adafruit_BME280::Adafruit_BME280(int8_t cspin)
     : _cs(cspin), _mosi(-1), _miso(-1), _sck(-1)
 { }
@@ -47,7 +52,7 @@ bool Adafruit_BME280::begin(uint8_t           addr)
     // init I2C or SPI sensor interface
     if (_cs == -1) {
         // I2C
-        Wire.begin();
+        _wire.begin();
     } else {
         digitalWrite(_cs, HIGH);
         pinMode(_cs, OUTPUT);
@@ -149,10 +154,10 @@ uint8_t Adafruit_BME280::spixfer(uint8_t x) {
 /**************************************************************************/
 void Adafruit_BME280::write8(byte reg, byte value) {
     if (_cs == -1) {
-        Wire.beginTransmission((uint8_t)_i2caddr);
-        Wire.write((uint8_t)reg);
-        Wire.write((uint8_t)value);
-        Wire.endTransmission();
+        _wire.beginTransmission((uint8_t)_i2caddr);
+        _wire.write((uint8_t)reg);
+        _wire.write((uint8_t)value);
+        _wire.endTransmission();
     } else {
         if (_sck == -1)
             SPI.beginTransaction(SPISettings(500000, MSBFIRST, SPI_MODE0));
@@ -175,11 +180,11 @@ uint8_t Adafruit_BME280::read8(byte reg) {
     uint8_t value;
     
     if (_cs == -1) {
-        Wire.beginTransmission((uint8_t)_i2caddr);
-        Wire.write((uint8_t)reg);
-        Wire.endTransmission();
-        Wire.requestFrom((uint8_t)_i2caddr, (byte)1);
-        value = Wire.read();
+        _wire.beginTransmission((uint8_t)_i2caddr);
+        _wire.write((uint8_t)reg);
+        _wire.endTransmission();
+        _wire.requestFrom((uint8_t)_i2caddr, (byte)1);
+        value = _wire.read();
     } else {
         if (_sck == -1)
             SPI.beginTransaction(SPISettings(500000, MSBFIRST, SPI_MODE0));
@@ -204,11 +209,11 @@ uint16_t Adafruit_BME280::read16(byte reg)
     uint16_t value;
 
     if (_cs == -1) {
-        Wire.beginTransmission((uint8_t)_i2caddr);
-        Wire.write((uint8_t)reg);
-        Wire.endTransmission();
-        Wire.requestFrom((uint8_t)_i2caddr, (byte)2);
-        value = (Wire.read() << 8) | Wire.read();
+        _wire.beginTransmission((uint8_t)_i2caddr);
+        _wire.write((uint8_t)reg);
+        _wire.endTransmission();
+        _wire.requestFrom((uint8_t)_i2caddr, (byte)2);
+        value = (_wire.read() << 8) | _wire.read();
     } else {
         if (_sck == -1)
             SPI.beginTransaction(SPISettings(500000, MSBFIRST, SPI_MODE0));
@@ -267,16 +272,16 @@ uint32_t Adafruit_BME280::read24(byte reg)
     uint32_t value;
 
     if (_cs == -1) {
-        Wire.beginTransmission((uint8_t)_i2caddr);
-        Wire.write((uint8_t)reg);
-        Wire.endTransmission();
-        Wire.requestFrom((uint8_t)_i2caddr, (byte)3);
+        _wire.beginTransmission((uint8_t)_i2caddr);
+        _wire.write((uint8_t)reg);
+        _wire.endTransmission();
+        _wire.requestFrom((uint8_t)_i2caddr, (byte)3);
 
-        value = Wire.read();
+        value = _wire.read();
         value <<= 8;
-        value |= Wire.read();
+        value |= _wire.read();
         value <<= 8;
-        value |= Wire.read();
+        value |= _wire.read();
     } else {
         if (_sck == -1)
             SPI.beginTransaction(SPISettings(500000, MSBFIRST, SPI_MODE0));

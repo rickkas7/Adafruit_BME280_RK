@@ -158,6 +158,7 @@ class Adafruit_BME280 {
     
         // constructors
         Adafruit_BME280(void);
+        Adafruit_BME280(TwoWire &wire);
         Adafruit_BME280(int8_t cspin);
         Adafruit_BME280(int8_t cspin, int8_t mosipin, int8_t misopin, int8_t sckpin);
         
@@ -193,6 +194,7 @@ class Adafruit_BME280 {
         uint16_t  read16_LE(byte reg); // little endian
         int16_t   readS16_LE(byte reg); // little endian
 
+        TwoWire   &_wire = Wire;
         uint8_t   _i2caddr;
         int32_t   _sensorID;
         int32_t   t_fine;
